@@ -1,29 +1,58 @@
-/* ページ全体の基本設定 */
+/* 全体の背景 */
 body {
-  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
-  background-color: #f4f7f6;
-  /* 薄いグレーの背景 */
-  color: #333;
-  /* 文字は真っ黒ではなく濃いグレー */
-  text-align: center;
-  /* 全部真ん中に寄せる */
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background-color: #e0e5ec;
+  /* 少し落ち着いたグレー */
+  display: flex;
+  /* 画面のど真ん中に配置する魔法 */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* 画面いっぱいの高さ */
   margin: 0;
-  padding-top: 50px;
 }
 
-/* 見出しのデザイン */
-h1 {
-  color: #2c3e50;
-  /* 落ち着いた紺色 */
-  border-bottom: 2px solid #3498db;
-  /* 青い下線 */
+/* カード本体のデザイン */
+.card {
+  background-color: white;
+  width: 300px;
+  padding: 30px;
+  border-radius: 20px;
+  /* 角を丸く */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  /* ふんわり影をつける */
+  text-align: center;
+}
+
+/* プロフィール画像のデザイン */
+.profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  /* 完全な丸にする */
+  border: 4px solid #3498db;
+  /* 青い枠線 */
+  margin-bottom: 15px;
+}
+
+/* リンクボタンのデザイン */
+a {
+  text-decoration: none;
+  color: white;
+  background-color: #3498db;
+  padding: 10px 20px;
+  border-radius: 5px;
   display: inline-block;
-  /* 線の長さを文字に合わせる */
-  padding-bottom: 10px;
+  margin: 5px;
+  font-weight: bold;
+  transition: 0.3s;
+  /* アニメーションの時間 */
 }
 
-/* 本文のデザイン */
-p {
-  font-size: 18px;
-  color: #666;
+/* マウスが乗った時の動き */
+a:hover {
+  background-color: #2980b9;
+  /* 色を濃くする */
+  transform: translateY(-2px);
+  /* 少し浮かせる */
 }
