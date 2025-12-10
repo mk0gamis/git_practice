@@ -1,0 +1,29 @@
+/* ページ全体の基本設定 */
+body {
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
+  background-color: #f4f7f6;
+  /* 薄いグレーの背景 */
+  color: #333;
+  /* 文字は真っ黒ではなく濃いグレー */
+  text-align: center;
+  /* 全部真ん中に寄せる */
+  margin: 0;
+  padding-top: 50px;
+}
+
+/* 見出しのデザイン */
+h1 {
+  color: #2c3e50;
+  /* 落ち着いた紺色 */
+  border-bottom: 2px solid #3498db;
+  /* 青い下線 */
+  display: inline-block;
+  /* 線の長さを文字に合わせる */
+  padding-bottom: 10px;
+}
+
+/* 本文のデザイン */
+p {
+  font-size: 18px;
+  color: #666;
+}
