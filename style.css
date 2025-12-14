@@ -22,6 +22,8 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   /* ふんわり影をつける */
   text-align: center;
+
+  animation: fadeInUp 1.2s ease-out;
 }
 
 /* プロフィール画像のデザイン */
@@ -85,4 +87,21 @@ body.dark-mode .card {
 body.dark-mode p {
   color: #bdc3c7;
   /* 薄いグレー */
+}
+
+/* フェードインしながら下から浮かび上がるアニメーション定義 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    /* 最初は透明 */
+    transform: translateY(30px);
+    /* 少し下にいる */
+  }
+
+  to {
+    opacity: 1;
+    /* 完全に不透明に */
+    transform: translateY(0);
+    /* 本来の位置へ */
+  }
 }
