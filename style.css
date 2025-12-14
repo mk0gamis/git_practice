@@ -56,3 +56,33 @@ a:hover {
   transform: translateY(-2px);
   /* 少し浮かせる */
 }
+
+/* ...今までのコードの下に追加... */
+
+/* ダークモード時の背景（夜） */
+body.dark-mode {
+  background-color: #2c3e50;
+  /* 暗い紺色 */
+  transition: background-color 0.5s;
+  /* 0.5秒かけてゆっくり色を変える */
+}
+
+/* ダークモード時のカード（光らせる） */
+body.dark-mode .card {
+  background-color: #34495e;
+  /* カードも少し暗く */
+  color: white;
+  /* 文字を白く */
+  box-shadow: 0 0 30px rgba(52, 152, 219, 0.8);
+  /* 青白く光らせる！ */
+  transform: scale(1.05);
+  /* 少しだけ大きくする */
+  transition: all 0.5s;
+  /* 動きをなめらかに */
+}
+
+/* ダークモード時の文字色調整 */
+body.dark-mode p {
+  color: #bdc3c7;
+  /* 薄いグレー */
+}
