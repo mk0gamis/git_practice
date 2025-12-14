@@ -105,3 +105,29 @@ body.dark-mode p {
     /* 本来の位置へ */
   }
 }
+
+/* --- ここから下を追加 --- */
+
+/* タイピングカーソルの演出 */
+#typing-text::after {
+  content: "|";
+  animation: blink 1s infinite;
+  margin-left: 5px;
+  /* 文字とカーソルの隙間 */
+}
+
+/* 点滅のアニメーション定義 */
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  /* 見える */
+  50% {
+    opacity: 0;
+  }
+
+  /* 消える */
+}
