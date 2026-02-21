@@ -1,133 +1,165 @@
 /* 全体の背景 */
 body {
   font-family: "Helvetica Neue", Arial, sans-serif;
-  background-color: #e0e5ec;
-  /* 少し落ち着いたグレー */
+  background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1a1a2e);
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease infinite;
   display: flex;
-  /* 画面のど真ん中に配置する魔法 */
   justify-content: center;
   align-items: center;
   height: 100vh;
-  /* 画面いっぱいの高さ */
   margin: 0;
+  overflow: hidden;
 }
 
-/* カード本体のデザイン */
-.card {
-  background-color: white;
-  width: 300px;
-  padding: 30px;
-  border-radius: 20px;
-  /* 角を丸く */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  /* ふんわり影をつける */
-  text-align: center;
+/* 背景グラデーションアニメーション */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
+/* パーティクルCanvas */
+#particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* カード本体 */
+.card {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 300px;
+  padding: 40px 30px;
+  border-radius: 24px;
+  text-align: center;
+  color: white;
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(99, 102, 241, 0.2);
   animation: fadeInUp 1.2s ease-out;
 }
 
-/* プロフィール画像のデザイン */
-.profile-img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  /* 完全な丸にする */
-  border: 4px solid #3498db;
-  /* 青い枠線 */
-  margin-bottom: 15px;
-}
-
-/* リンクボタンのデザイン */
-a {
-  text-decoration: none;
-  color: white;
-  background-color: #3498db;
-  padding: 10px 20px;
-  border-radius: 5px;
-  display: inline-block;
-  margin: 5px;
-  font-weight: bold;
-  transition: 0.3s;
-  /* アニメーションの時間 */
-}
-
-/* マウスが乗った時の動き */
-a:hover {
-  background-color: #2980b9;
-  /* 色を濃くする */
-  transform: translateY(-2px);
-  /* 少し浮かせる */
-}
-
-/* ...今までのコードの下に追加... */
-
-/* ダークモード時の背景（夜） */
-body.dark-mode {
-  background-color: #2c3e50;
-  /* 暗い紺色 */
-  transition: background-color 0.5s;
-  /* 0.5秒かけてゆっくり色を変える */
-}
-
-/* ダークモード時のカード（光らせる） */
-body.dark-mode .card {
-  background-color: #34495e;
-  /* カードも少し暗く */
-  color: white;
-  /* 文字を白く */
-  box-shadow: 0 0 30px rgba(52, 152, 219, 0.8);
-  /* 青白く光らせる！ */
-  transform: scale(1.05);
-  /* 少しだけ大きくする */
-  transition: all 0.5s;
-  /* 動きをなめらかに */
-}
-
-/* ダークモード時の文字色調整 */
-body.dark-mode p {
-  color: #bdc3c7;
-  /* 薄いグレー */
-}
-
-/* フェードインしながら下から浮かび上がるアニメーション定義 */
+/* フェードインアニメーション */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    /* 最初は透明 */
-    transform: translateY(30px);
-    /* 少し下にいる */
+    transform: translateY(40px);
   }
-
   to {
     opacity: 1;
-    /* 完全に不透明に */
     transform: translateY(0);
-    /* 本来の位置へ */
   }
 }
 
-/* --- ここから下を追加 --- */
+/* プロフィール画像の回転枠 */
+.profile-ring {
+  width: 112px;
+  height: 112px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(0deg, #6366f1, #a855f7, #ec4899, #6366f1);
+  background-size: 200% 200%;
+  animation: spinRing 3s linear infinite;
+}
 
-/* タイピングカーソルの演出 */
+@keyframes spinRing {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 0% 200%; }
+}
+
+/* プロフィール画像 */
+.profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+  object-fit: cover;
+}
+
+/* 名前 */
+h1 {
+  margin: 0 0 10px;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(99, 102, 241, 0.8);
+}
+
+/* タイピングテキスト */
+#typing-text {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  min-height: 1.5em;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* タイピングカーソル */
 #typing-text::after {
   content: "|";
   animation: blink 1s infinite;
-  margin-left: 5px;
-  /* 文字とカーソルの隙間 */
+  margin-left: 2px;
+  color: #a855f7;
 }
 
-/* 点滅のアニメーション定義 */
 @keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
 
-  0%,
-  100% {
-    opacity: 1;
-  }
+/* リンクボタン */
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
-  /* 見える */
-  50% {
+.btn {
+  text-decoration: none;
+  color: white;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  padding: 10px 20px;
+  border-radius: 50px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 0.85rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+.btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+}
+
+/* リップルエフェクト */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(0);
+  animation: rippleAnim 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes rippleAnim {
+  to {
+    transform: scale(4);
     opacity: 0;
   }
-
-  /* 消える */
 }
