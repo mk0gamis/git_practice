@@ -14,6 +14,7 @@ window.addEventListener('resize', () => {
 
 const particles = [];
 const PARTICLE_COUNT = 80;
+let mouseX = -9999, mouseY = -9999;
 
 class Particle {
   constructor() {
@@ -29,6 +30,20 @@ class Particle {
     this.color = `hsl(${Math.random() * 60 + 220}, 80%, 70%)`;
   }
   update() {
+    const dx = mouseX - this.x;
+    const dy = mouseY - this.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 160 && dist > 0) {
+      const force = (160 - dist) / 160 * 0.025;
+      this.speedX += (dx / dist) * force;
+      this.speedY += (dy / dist) * force;
+    }
+    const maxSpeed = 2;
+    const spd = Math.sqrt(this.speedX ** 2 + this.speedY ** 2);
+    if (spd > maxSpeed) {
+      this.speedX = (this.speedX / spd) * maxSpeed;
+      this.speedY = (this.speedY / spd) * maxSpeed;
+    }
     this.x += this.speedX;
     this.y += this.speedY;
     if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
@@ -76,18 +91,20 @@ animateParticles();
 
 
 /* =====================
-   3D マウス傾きエフェクト
+   3D マウス傾き ＋ トレイル
    ===================== */
 const card = document.getElementById('card');
 
 document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+
+  // 3D 傾き
   const rect = card.getBoundingClientRect();
   const cx = rect.left + rect.width / 2;
   const cy = rect.top + rect.height / 2;
-
   const dx = (e.clientX - cx) / (window.innerWidth / 2);
   const dy = (e.clientY - cy) / (window.innerHeight / 2);
-
   const rotateX = dy * -15;
   const rotateY = dx * 15;
 
@@ -96,11 +113,58 @@ document.addEventListener('mousemove', (e) => {
     ${-rotateY * 2}px ${rotateX * 2}px 50px rgba(0,0,0,0.4),
     0 0 60px rgba(99, 102, 241, 0.35)
   `;
+
+  // マウストレイル
+  const trail = document.createElement('div');
+  trail.classList.add('trail');
+  trail.style.left = e.clientX + 'px';
+  trail.style.top = e.clientY + 'px';
+  const hue = Math.random() * 60 + 220;
+  trail.style.background = `radial-gradient(circle, hsla(${hue}, 80%, 70%, 0.9), transparent)`;
+  document.body.appendChild(trail);
+  setTimeout(() => trail.remove(), 500);
 });
 
 document.addEventListener('mouseleave', () => {
+  mouseX = -9999;
+  mouseY = -9999;
   card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)';
   card.style.boxShadow = '0 25px 50px rgba(0,0,0,0.4), 0 0 40px rgba(99,102,241,0.2)';
+});
+
+
+/* =====================
+   ホログラフィック効果
+   ===================== */
+const holoOverlay = document.createElement('div');
+holoOverlay.className = 'holo-overlay';
+card.appendChild(holoOverlay);
+
+card.addEventListener('mousemove', (e) => {
+  const rect = card.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+  const angle = (x + y) * 1.8;
+
+  holoOverlay.style.background = `
+    radial-gradient(circle at ${x}% ${y}%,
+      rgba(255, 120, 180, 0.3) 0%,
+      rgba(120, 200, 255, 0.2) 30%,
+      rgba(120, 255, 180, 0.15) 55%,
+      transparent 70%
+    ),
+    linear-gradient(
+      ${angle}deg,
+      rgba(99, 102, 241, 0.12),
+      rgba(236, 72, 153, 0.12) 50%,
+      rgba(16, 185, 129, 0.12)
+    )
+  `;
+  holoOverlay.style.opacity = '1';
+});
+
+card.addEventListener('mouseleave', () => {
+  holoOverlay.style.opacity = '0';
 });
 
 
@@ -140,3 +204,24 @@ function typeWriter() {
 window.onload = function () {
   setTimeout(typeWriter, 1500);
 };
+
+
+/* =====================
+   スパークル
+   ===================== */
+function createSparkle() {
+  const sparkle = document.createElement('div');
+  sparkle.classList.add('sparkle');
+  const size = Math.random() * 10 + 6;
+  sparkle.style.width = size + 'px';
+  sparkle.style.height = size + 'px';
+  sparkle.style.left = (Math.random() * 88 + 6) + '%';
+  sparkle.style.top  = (Math.random() * 88 + 6) + '%';
+  const hues = [260, 280, 320, 200];
+  const hue = hues[Math.floor(Math.random() * hues.length)];
+  sparkle.style.setProperty('--hue', hue);
+  card.appendChild(sparkle);
+  setTimeout(() => sparkle.remove(), 900);
+}
+
+setInterval(createSparkle, 350);
